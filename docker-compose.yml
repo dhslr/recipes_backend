@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_USER
+
+  app:
+    build: .
+    command: bin/recipes_backend start
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL
+      - SECRET_KEY_BASE
+    ports:
+      - "4000:4000"
+    links:
+      - db
+    depends_on:
+      - db
+    volumes:
+      - photos:/app/photos
+
+volumes:
+  photos:
