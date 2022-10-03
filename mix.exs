@@ -39,6 +39,8 @@ defmodule RecipesBackend.MixProject do
       {:argon2_elixir, "~> 2.0"},
       {:postgrex, "~> 0.16.5"},
       {:phoenix_live_dashboard, "~> 0.7.0"},
+      {:telemetry_metrics, "~> 0.6.1"},
+      {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.2"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
