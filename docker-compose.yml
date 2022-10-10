@@ -12,7 +12,7 @@ services:
 
   app:
     build: .
-    command: bin/recipes_backend start
+    command: start
     restart: unless-stopped
     environment:
       - DATABASE_URL
