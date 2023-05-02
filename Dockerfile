@@ -22,26 +22,20 @@ COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
-# copy compile-time config files before we compile dependencies
-# to ensure any relevant config change will trigger the dependencies
-# to be re-compiled.
-COPY config/config.exs config/$MIX_ENV.exs config/
+COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
 COPY priv priv
 
-# build assets
-COPY assets assets
-RUN mix phx.digest
-#RUN mix assets.deploy
-
-# compile and build release
+# Compile the release
 COPY lib lib
+
 RUN mix compile
-# changes to config/runtime.exs don't require recompiling the code
+
+# Changes to config/runtime.exs don't require recompiling the code
 COPY config/runtime.exs config/
-# uncomment COPY if rel/ exists
-# COPY rel rel
+
+COPY rel rel
 RUN mix release
 
 # prepare release image
@@ -68,10 +62,11 @@ RUN \
 
 
 # Everything from this line onwards will run in the context of the unprivileged user.
-USER "${USER}"
 
-COPY --from=build --chown="${USER}":"${USER}" /app/_build/"${MIX_ENV}"/rel/recipes_backend ./
+COPY --from=build --chown="${USER}":"${USER}" /app/_build/${MIX_ENV}/rel/recipes_backend ./
 COPY --chown="${USER}":"${USER}" photos ./photos
+
+USER "${USER}"
 
 # Usage:
 #  * build: sudo docker image build -t elixir/recipes_backend .
@@ -79,4 +74,5 @@ COPY --chown="${USER}":"${USER}" photos ./photos
 #  * exec:  sudo docker container exec -it recipes_backend sh
 #  * logs:  sudo docker container logs --follow --tail 100 recipes_backend
 
-CMD "/home/${USER}/app/server"
+CMD ["sh", "-c", "/home/${USER}/app/bin/migrate && /home/${USER}/app/bin/server"]
+

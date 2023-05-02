@@ -1,5 +1,18 @@
 import Config
 
+# ## Using releases
+#
+# If you use `mix release`, you need to explicitly enable the server
+# by passing the PHX_SERVER=true when you start it:
+#
+#     PHX_SERVER=true bin/reipces_backend start
+#
+# Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
+# script that automatically sets the env var above.
+if System.get_env("PHX_SERVER") do
+  config :recipes_backend, RecipesBackend.Endpoint, server: true
+end
+
 # Only use runtime configuration for prod (for now)
 if config_env() == :prod do
   database_url =

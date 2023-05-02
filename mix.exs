@@ -5,9 +5,9 @@ defmodule RecipesBackend.MixProject do
     [
       app: :recipes_backend,
       version: "0.2.2",
-      elixir: "~> 1.13",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,7 +33,8 @@ defmodule RecipesBackend.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6"},
+      {:phoenix, "~> 1.7"},
+      {:phoenix_view, "~> 2.0.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.9"},
       {:argon2_elixir, "~> 2.0"},
