@@ -73,12 +73,10 @@ USER "${USER}"
 COPY --from=build --chown="${USER}":"${USER}" /app/_build/"${MIX_ENV}"/rel/recipes_backend ./
 COPY --chown="${USER}":"${USER}" photos ./photos
 
-ENTRYPOINT ["bin/recipes_backend"]
-
 # Usage:
 #  * build: sudo docker image build -t elixir/recipes_backend .
-#  * shell: sudo docker container run --rm -it --entrypoint "" -p 127.0.0.1:4000:4000 elixir/recipes_backend sh
 #  * run:   sudo docker container run --rm -it -p 127.0.0.1:4000:4000 --name recipes_backend elixir/recipes_backend
 #  * exec:  sudo docker container exec -it recipes_backend sh
 #  * logs:  sudo docker container logs --follow --tail 100 recipes_backend
-CMD ["start"]
+
+CMD "/home/${USER}/app/server"
