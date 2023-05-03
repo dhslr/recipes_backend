@@ -32,7 +32,7 @@ defmodule RecipesBackendWeb.Endpoint do
     at: "/",
     from: {:recipes_backend, "priv/static/recipes_web"},
     gzip: false,
-    only: ~w(assets index.html icons favicon.png main.dart.js main.dart.js.map manifest.json flutter_service_worker.js)
+    only: ~w(assets canvaskit icons index.html favicon.png main.dart.js main.dart.js.map manifest.json flutter_service_worker.js flutter.js)
 
   plug Plug.Static,
     at: "/photos",
