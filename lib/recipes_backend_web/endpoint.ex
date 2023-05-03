@@ -36,7 +36,7 @@ defmodule RecipesBackendWeb.Endpoint do
 
   plug Plug.Static,
     at: "/photos",
-    from: "./photos",
+    from: {:recipes_backend, Path.expand("./photos")},
     gzip: false
 
   # Code reloading can be explicitly enabled under the
