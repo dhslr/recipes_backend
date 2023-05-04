@@ -19,6 +19,8 @@ ENV MIX_ENV="${MIX_ENV}"
 # install mix dependencies
 COPY mix.exs mix.lock ./
 
+RUN mix phx.digest
+
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
