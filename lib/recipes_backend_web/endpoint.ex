@@ -26,7 +26,7 @@ defmodule RecipesBackendWeb.Endpoint do
     at: "/",
     from: :recipes_backend,
     gzip: false,
-    only: ~w(css fonts photos images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/",
@@ -36,7 +36,7 @@ defmodule RecipesBackendWeb.Endpoint do
 
   plug Plug.Static,
     at: "/photos",
-    from: {:recipes_backend, "./photos"},
+    from: Path.expand("./priv/static/photos"),
     gzip: false
 
   # Code reloading can be explicitly enabled under the

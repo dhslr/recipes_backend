@@ -67,7 +67,7 @@ RUN \
 # Everything from this line onwards will run in the context of the unprivileged user.
 
 COPY --from=build --chown="${USER}":"${USER}" /app/_build/${MIX_ENV}/rel/recipes_backend ./
-COPY --chown="${USER}":"${USER}" photos ./photos
+#COPY --chown="${USER}":"${USER}" photos ./photos
 
 USER "${USER}"
 
