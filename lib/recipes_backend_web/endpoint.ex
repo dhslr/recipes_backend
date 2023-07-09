@@ -7,12 +7,26 @@ defmodule RecipesBackendWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_recipes_backend_key",
-    signing_salt: "2Msb1iHn"
+    signing_salt: "2Msb1iHn",
+    same_site: "Lax"
   ]
 
   socket "/socket", RecipesBackendWeb.UserSocket,
     websocket: true,
     longpoll: false
+
+  plug Plug.Static.IndexHtml,
+    at: "/"
+
+  # Serve at "/" the static files from "priv/static" directory.
+  #
+  # You should set gzip to true if you are running phx.digest
+  # when deploying your static files in production.
+  plug Plug.Static,
+    at: "/",
+    from: :recipes_backend,
+    gzip: false,
+    only: ~w(css fonts images js favicon.ico robots.txt)
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -20,7 +34,8 @@ defmodule RecipesBackendWeb.Endpoint do
     at: "/",
     from: {:recipes_backend, "priv/static/recipes_web"},
     gzip: false,
-    only: ~w(assets canvaskit icons index.html favicon.png main.dart.js main.dart.js.map manifest.json flutter_service_worker.js flutter.js)
+    only:
+      ~w(assets canvaskit icons index.html favicon.png main.dart.js main.dart.js.map manifest.json flutter_service_worker.js flutter.js)
 
   plug Plug.Static,
     at: "/photos",
