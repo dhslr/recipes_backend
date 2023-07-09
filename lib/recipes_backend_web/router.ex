@@ -8,6 +8,7 @@ defmodule RecipesBackendWeb.Router do
 
   pipeline :browser do
     plug(:accepts, ["html"])
+    # TODO maybe add plugs here like in oders
   end
 
   pipeline :no_auth do
