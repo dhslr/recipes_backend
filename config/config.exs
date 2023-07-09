@@ -7,7 +7,6 @@ config :recipes_backend,
 # Configures the endpoint
 config :recipes_backend, RecipesBackendWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "HTPGrlF5RBDMZHT27X87cFd3wAt4aFrz7S5AMxQjMq2ayHt2IxSlGtvHaRM/isCa",
   render_errors: [view: RecipesBackendWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: RecipesBackend.PubSub,
   live_view: [signing_salt: "TgjfV8OA"]
