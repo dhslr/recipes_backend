@@ -37,7 +37,7 @@ if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "recipes.dhslr.de"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
-  config :orders, OrdersWeb.Endpoint,
+  config :recipes_backend, RecipesBackendWeb.Endpoint,
     url: [host: host, port: port],
     http: [
       # Enable IPv6 and bind on all interfaces.
