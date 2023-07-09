@@ -16,18 +16,6 @@ defmodule RecipesBackendWeb.Endpoint do
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
-  plug Plug.Static.IndexHtml,
-    at: "/"
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phx.digest
-  # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/",
-    from: :recipes_backend,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
-
   plug Plug.Static,
     at: "/",
     from: {:recipes_backend, "priv/static/recipes_web"},
