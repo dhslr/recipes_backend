@@ -1,9 +1,15 @@
-ARG MIX_ENV="prod"
+ARG ELIXIR_VERSION=1.14.2
+ARG OTP_VERSION=25.1.2
+ARG DEBIAN_VERSION=bullseye-20221004-slim
 
-FROM hexpm/elixir:1.14.0-erlang-25.1.1-alpine-3.16.2 AS build
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
+
+FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apk add --no-cache build-base
+RUN apt-get update -y && apt-get install -y build-essential git \
+    && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
 WORKDIR /app
@@ -13,12 +19,10 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 # set build ENV
-ARG MIX_ENV
-ENV MIX_ENV="${MIX_ENV}"
+ENV MIX_ENV="prod"
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
-
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
@@ -27,49 +31,47 @@ RUN mix deps.compile
 
 COPY priv priv
 
-# Compile the release
 COPY lib lib
 
+# COPY assets assets
+
+# compile assets
+RUN mix assets.deploy
+
+# Compile the release
 RUN mix compile
 
 # Changes to config/runtime.exs don't require recompiling the code
 COPY config/runtime.exs config/
 
 COPY rel rel
-
-RUN mix phx.digest
-
 RUN mix release
 
-# prepare release image
-FROM alpine:3.16.2 AS app
-RUN apk add --no-cache openssl ncurses-libs libstdc++
+# start a new build stage so that the final image will only contain
+# the compiled release and other runtime necessities
+FROM ${RUNNER_IMAGE}
 
+RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-ARG MIX_ENV
-ENV USER="elixir"
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-WORKDIR "/home/${USER}/app"
-# Creates an unprivileged user to be used exclusively to run the Phoenix app
-RUN \
-  addgroup \
-   -g 1000 \
-   -S "${USER}" \
-  && adduser \
-   -s /bin/sh \
-   -u 1000 \
-   -G "${USER}" \
-   -h "/home/${USER}" \
-   -D "${USER}" \
-  && su "${USER}"
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
+WORKDIR "/app"
+RUN mkdir /app/data
+RUN chown nobody -R /app
 
-# Everything from this line onwards will run in the context of the unprivileged user.
+# set runner ENV
+ENV MIX_ENV="prod"
 
-COPY --from=build --chown="${USER}":"${USER}" /app/_build/${MIX_ENV}/rel/recipes_backend ./
-#COPY --chown="${USER}":"${USER}" photos ./photos
+# Only copy the final release from the build stage
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/recipes_backend ./
 
-USER "${USER}"
+USER nobody
 
 # Usage:
 #  * build: sudo docker image build -t elixir/recipes_backend .
@@ -77,5 +79,5 @@ USER "${USER}"
 #  * exec:  sudo docker container exec -it recipes_backend sh
 #  * logs:  sudo docker container logs --follow --tail 100 recipes_backend
 
-CMD ["sh", "-c", "/home/${USER}/app/bin/migrate && /home/${USER}/app/bin/server"]
+CMD ["sh", "-c", "/app/bin/migrate && /app/bin/server"]
 
