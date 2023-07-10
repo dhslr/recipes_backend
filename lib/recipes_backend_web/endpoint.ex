@@ -26,7 +26,7 @@ defmodule RecipesBackendWeb.Endpoint do
     at: "/",
     from: :recipes_backend,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images photos js favicon.ico robots.txt)
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -36,11 +36,6 @@ defmodule RecipesBackendWeb.Endpoint do
     gzip: false,
     only:
       ~w(assets canvaskit icons index.html favicon.png main.dart.js main.dart.js.map manifest.json flutter_service_worker.js flutter.js)
-
-  plug Plug.Static,
-    at: "/photos",
-    from: Path.expand("./priv/static/photos"),
-    gzip: false
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
