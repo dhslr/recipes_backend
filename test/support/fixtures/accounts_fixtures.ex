@@ -7,7 +7,8 @@ defmodule RecipesBackend.AccountsFixtures do
         email: "test123@example.org",
         password: "super s3cr3t!"
       })
-      user
+
+    user
   end
 
   def admin_fixture() do
@@ -17,6 +18,7 @@ defmodule RecipesBackend.AccountsFixtures do
         password: "more super s3cr3t!",
         is_admin: true
       })
-      user
+
+    user
   end
 end

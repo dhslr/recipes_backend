@@ -2,7 +2,6 @@ defmodule RecipesBackend.Accounts.SessionTest do
   use RecipesBackend.DataCase
   alias RecipesBackend.Accounts.Session
 
-
   @valid_attrs %{user_id: "1", user_agent: "some_agent/1.0"}
   @invalid_attrs %{user_agent: "some_agent/1.0"}
 
@@ -26,5 +25,4 @@ defmodule RecipesBackend.Accounts.SessionTest do
     changeset = Session.create_changeset(%Session{}, @invalid_attrs)
     refute changeset.valid?
   end
-
 end

@@ -45,6 +45,7 @@ defmodule RecipesBackend.Authentication do
 
   defp auth_error!(conn, reason) do
     Logger.info("Authentication error: #{reason}")
+
     conn
     |> put_status(:unauthorized)
     |> put_view(RecipesBackendWeb.ErrorView)

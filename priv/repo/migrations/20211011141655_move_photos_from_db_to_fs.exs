@@ -11,6 +11,7 @@ defmodule RecipesBackend.Repo.Migrations.MovePhotosFromDbToFs do
 
   def save_all_photos() do
     photos_dir = Photo.photos_dir()
+
     Repo.all(Photo)
     |> Enum.map(fn photo ->
       filename = "#{photos_dir}/#{Photo.filename(photo)}"

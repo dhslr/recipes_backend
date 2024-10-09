@@ -11,13 +11,13 @@ defmodule RecipesBackend.Repo.Migrations.CreateIngredientPosition do
   end
 
   defp update_ingredients_in_recipe(recipe = %Recipe{}) do
-    updated_ingredients = recipe.ingredients
-    |> Enum.with_index(1)
-    |> Enum.map(&update_ingredient/1)
+    updated_ingredients =
+      recipe.ingredients
+      |> Enum.with_index(1)
+      |> Enum.map(&update_ingredient/1)
   end
 
   defp update_ingredient({ingredient, position}) do
     Recipes.update_ingredient(ingredient, %{position: position})
   end
-
 end

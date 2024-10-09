@@ -7,6 +7,7 @@ defmodule RecipesBackendWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     user = conn.assigns.current_user
+
     if user.is_admin do
       changeset = User.changeset(%User{}, user_params)
 

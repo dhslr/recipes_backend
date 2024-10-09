@@ -30,6 +30,7 @@ defmodule RecipesBackendWeb.SessionControllerTest do
 
     test "overrides old session when session already exists", %{conn: conn, user: user} do
       Accounts.create_session(%{user_id: user.id, user_agent: @user_agent})
+
       conn =
         conn
         |> post(Routes.session_path(conn, :create))

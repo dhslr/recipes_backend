@@ -26,6 +26,7 @@ defmodule RecipesBackend.Accounts do
   def verify_user(email, password) do
     Logger.info("Verfiy user '#{email}'")
     user = get_user_by_email(email)
+
     if is_nil(user) do
       Logger.info("User with '#{email}' not found!")
     end
