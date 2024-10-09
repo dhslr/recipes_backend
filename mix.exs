@@ -5,7 +5,7 @@ defmodule RecipesBackend.MixProject do
     [
       app: :recipes_backend,
       version: "0.2.2",
-      elixir: "~> 1.14",
+      elixir: "~> 1.16",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
