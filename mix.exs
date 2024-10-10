@@ -69,7 +69,10 @@ defmodule RecipesBackend.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
-      "assets.deploy": ["phx.digest"]
+      "assets.deploy": ["phx.digest"],
+      # FIXME enable warning as-errors again
+      # ci: ["deps.get", "compile --warnings-as-errors", "format --check-formatted", "test"]
+      ci: ["deps.get", "format --check-formatted", "test"]
     ]
   end
 end

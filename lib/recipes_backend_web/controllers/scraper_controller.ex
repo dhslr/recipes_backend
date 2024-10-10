@@ -11,5 +11,4 @@ defmodule RecipesBackendWeb.ScraperController do
       |> render("show.json", scraped_recipe: scraped_recipe)
     end
   end
-
 end

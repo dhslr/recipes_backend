@@ -23,5 +23,4 @@ defmodule RecipesBackend.Accounts.Session do
     |> changeset(attrs)
     |> put_change(:token, SecureRandom.urlsafe_base64())
   end
-
 end

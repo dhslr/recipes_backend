@@ -26,7 +26,7 @@ config :recipes_backend,
   recipe_scraper: RecipesBackend.RecipeScraper.Chefkoch
 
 config :recipes_backend,
-  version: Mix.Project.config[:version]
+  version: Mix.Project.config()[:version]
 
 config :recipes_backend,
   photos_dir: "./photos"

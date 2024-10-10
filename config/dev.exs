@@ -16,11 +16,11 @@ config :recipes_backend, RecipesBackend.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :recipes_backend, RecipesBackendWeb.Endpoint,
-http: [ip: {127, 0, 0, 1}, port: 4000],
-check_origin: false,
-code_reloader: true,
-debug_errors: true,
-secret_key_base: "G3YwBOZ2cENHf4Q10OgWvOdP6XgII4GDZbEdpUE1jeBLEL1jNy8q3FejfLBC7HTb"
+  http: [ip: {127, 0, 0, 1}, port: 4000],
+  check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
+  secret_key_base: "G3YwBOZ2cENHf4Q10OgWvOdP6XgII4GDZbEdpUE1jeBLEL1jNy8q3FejfLBC7HTb"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

@@ -70,7 +70,9 @@ defmodule RecipesBackendWeb.ConnCase do
   end
 
   defp put_authorization_header(conn, user) do
-    {:ok, session} = RecipesBackend.Accounts.create_session(%{user_id: user.id, user_agent: "some_agent/1.0"})
+    {:ok, session} =
+      RecipesBackend.Accounts.create_session(%{user_id: user.id, user_agent: "some_agent/1.0"})
+
     {:ok, conn: Plug.Conn.put_req_header(conn, "authorization", "Token #{session.token}")}
   end
 end

@@ -11,21 +11,21 @@ defmodule RecipesBackend.Accounts.UserTest do
   end
 
   test "changeset, lacking email is not valid" do
-    changeset = User.changeset(%User{},  %{password: "donttell!"})
+    changeset = User.changeset(%User{}, %{password: "donttell!"})
     refute changeset.valid?
   end
 
   test "changeset, with email in wrong format is not valid" do
-    changeset = User.changeset(%User{},  Map.put(@valid_attrs, :email, ""))
+    changeset = User.changeset(%User{}, Map.put(@valid_attrs, :email, ""))
     refute changeset.valid?
 
-    changeset = User.changeset(%User{},  Map.put(@valid_attrs, :email, "test"))
+    changeset = User.changeset(%User{}, Map.put(@valid_attrs, :email, "test"))
     refute changeset.valid?
 
-    changeset = User.changeset(%User{},  Map.put(@valid_attrs, :email, "test@"))
+    changeset = User.changeset(%User{}, Map.put(@valid_attrs, :email, "test@"))
     refute changeset.valid?
 
-    changeset = User.changeset(%User{},  Map.put(@valid_attrs, :email, "exmaple.org"))
+    changeset = User.changeset(%User{}, Map.put(@valid_attrs, :email, "exmaple.org"))
     refute changeset.valid?
   end
 
@@ -43,9 +43,12 @@ defmodule RecipesBackend.Accounts.UserTest do
   end
 
   test "registration_changeset, password too short" do
-    changeset = User.registration_changeset(
-      %User{}, Map.put(@valid_attrs, :password, "12345")
-    )
+    changeset =
+      User.registration_changeset(
+        %User{},
+        Map.put(@valid_attrs, :password, "12345")
+      )
+
     refute changeset.valid?
   end
 end

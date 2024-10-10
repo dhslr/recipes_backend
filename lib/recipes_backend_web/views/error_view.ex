@@ -25,5 +25,4 @@ defmodule RecipesBackendWeb.ErrorView do
   def render("403.json", _) do
     %{errors: "You are not allowed to do that!"}
   end
-
 end

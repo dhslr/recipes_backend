@@ -2,7 +2,6 @@ defmodule RecipesBackend.Repo.Migrations.CreatePhotos do
   use Ecto.Migration
 
   def change do
-
     create table(:photos) do
       add :caption, :string
       add :data, :binary

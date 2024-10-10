@@ -28,5 +28,4 @@ defmodule RecipesBackend.Photos do
     Logger.debug("Deleting photo #{path}")
     path
   end
-
 end

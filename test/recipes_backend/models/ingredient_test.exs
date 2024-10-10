@@ -4,7 +4,13 @@ defmodule RecipesBackend.Models.IngredientTest do
   alias RecipesBackend.Recipes.Ingredient
 
   describe "ingredients" do
-    @valid_attrs %{description: "some description", quantity: 12.5, food_id: 1, recipe_id: 1, position: 1}
+    @valid_attrs %{
+      description: "some description",
+      quantity: 12.5,
+      food_id: 1,
+      recipe_id: 1,
+      position: 1
+    }
     @invalid_attrs_no_food_id %{description: "some description", recipe_id: 1}
     @invalid_attrs_no_recipe_id %{description: "some description", food_id: 1}
     @invalid_attrs_quantity_no_number %{
